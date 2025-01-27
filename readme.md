@@ -1,7 +1,3 @@
-Here’s the grammar-corrected version of your text:
-
----
-
 # Source Code for NOM
 
 We provide all the source code for the dynamics presented in the paper, as well as code for data collection and training a neural network (NN) controller. 
