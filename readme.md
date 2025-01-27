@@ -12,12 +12,14 @@ Training a NOM needs multiprocessing approach in Linux system. Please make sure 
 
 ### 1. Mathmatical Model
 We use a mathmatical model:
+
 $$
-\begin{cases}
-\dot{x}_1 = x_2, \\
-\dot{x}_2 = x_1^3 + (x_2^2 + 1)u
-\end{cases}
+\begin{aligned}
+\dot{x}_1&=x_2,\\
+\dot{x}_2&=x_1^3+(x_2^2+1)u,
+\end{aligned}
 $$
+
 
 which can be discretize using Euler's method as follows ($\Delta T$=0.1s):
 $$
