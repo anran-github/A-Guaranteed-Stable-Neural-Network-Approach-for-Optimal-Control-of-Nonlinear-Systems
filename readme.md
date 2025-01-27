@@ -1,123 +1,81 @@
-Here's the revised Markdown file formatted for GitHub's README style:
+# Source Code for NOM.
 
-```markdown
-# Source Code for NOM
+We provide all sorce code of dynamics appeared in the paper, as well as code for data collection and code for training a NN controller. 
 
-We provide all source code for the dynamics presented in the paper, as well as the code for data collection and training a neural network (NN) controller.
+### Prequest:
+Training a NOM needs multiprocessing approach in Linux system. Please make sure your operation system is feasible for multi-processing.
 
----
 
-### Prerequisite
 
-Training a NOM requires a multiprocessing approach on a Linux system. Please ensure your operating system supports multiprocessing.
+## Control Objects:
 
----
 
-## Control Objects
+### 1. Mathmatical Model
+We use a mathmatical model:
+$$
+\dot{x}_1=x_2,\\
+\dot{x}_2=x_1^3+(x_2^2+1)u,
+$$
+which can be discretize using Euler's method as follows ($\Delta T$=0.1s):
+$$
+x_1(t+1)=x_1(t)+\Delta T x_2(t),\\
+x_2(t+1)=x_2(t)+\Delta T\big(x_1(t)^3+ (x_2(t)^2+1)\big)u(t),
+$$
 
-### 1. Mathematical Model
+We set $\mathcal{X}=[-5,5]\times[-5,5]$ and $\mathcal{R}=0$. 
 
-We use a mathematical model:
+You can compare your controller with our NOM-NN controller via revising following code:
 
+    NOM_IP_YALMIP_NOM_LQR.py
+
+
+### 2. Drone (Real+Simulation)
+The Bibop 2 drone dynamic model we are using is following:
 $$
 \begin{aligned}
-\dot{x}_1 &= x_2, \\
-\dot{x}_2 &= x_1^3 + (x_2^2 + 1)u,
-\end{aligned}
-$$
-
-which can be discretized using Euler's method as follows (with $\Delta T=0.1s$):
-
-$$
-\begin{aligned}
-x_1(t+1) &= x_1(t) + \Delta T x_2(t), \\
-x_2(t+1) &= x_2(t) + \Delta T \big(x_1(t)^3 + (x_2(t)^2 + 1)u(t)\big).
-\end{aligned}
-$$
-
-We set the state space $\mathcal{X} = [-5,5] \times [-5,5]$ and the reference $\mathcal{R} = 0$. 
-
-You can compare your controller with our NOM-NN controller by modifying the following code:
-
-```
-NOM_IP_YALMIP_NOM_LQR.py
-```
-
----
-
-### 2. Drone (Real + Simulation)
-
-The Bebop 2 drone dynamic model we use is as follows:
-
-$$
-\begin{aligned}
-\dot{x} &= 
-\begin{bmatrix}
+& \dot{x}=\left[\begin{array}{cccccc}
 0 & 1 & 0 & 0 & 0 & 0 \\
 0 & -0.0527 & 0 & 0 & 0 & 0 \\
 0 & 0 & 0 & 1 & 0 & 0 \\
 0 & 0 & 0 & -0.0187 & 0 & 0 \\
 0 & 0 & 0 & 0 & 0 & 1 \\
 0 & 0 & 0 & 0 & 0 & -1.7873
-\end{bmatrix}
-x +
-\begin{bmatrix}
+\end{array}\right] x+\left[\begin{array}{ccc}
 0 & 0 & 0 \\
 -5.4779 & 0 & 0 \\
 0 & 0 & 0 \\
 0 & -7.0608 & 0 \\
 0 & 0 & 0 \\
 0 & 0 & -1.7382
-\end{bmatrix}
-u, \\
-y &= 
-\begin{bmatrix}
+\end{array}\right] u, \\
+& y=\left[\begin{array}{llllll}
 1 & 0 & 0 & 0 & 0 & 0 \\
 0 & 0 & 1 & 0 & 0 & 0 \\
 0 & 0 & 0 & 0 & 1 & 0
-\end{bmatrix}
-x.
+\end{array}\right] x,
 \end{aligned}
 $$
 
-We set the state space $\mathcal{X} = [-1,1] \times [-1,1] \times [0.5,2]$ and the reference $\mathcal{R} = [0,0,1.5]$.
+We set $\mathcal{X}=[-1,1]\times[-1,1]\times[0.5,2]$ and $\mathcal{R}=[0,0,1.5]$.
 
-Simulation code for the drone is also provided. You can compare your controller with our NOM-NN controller via simulation:
+We provide a simulation code for the drone as well. You can compare your controller with our NOM-NN controller via simulation:
 
-```
-drone_simulation_random_point.m
-```
+    drone_simulation_random_point.m
 
----
+#### Paper Figures for Drone:
 
-#### Paper Figures for Drone
+You can obtain NOM paper figures directly by running follwoing code:
 
-You can reproduce the figures from the NOM paper directly by running the following code:
+open 'PAPER_IMPORTANT_NOM' folder and run 
 
-Navigate to the `PAPER_IMPORTANT_NOM` folder and run:
-
-```bash
-cd PAPER_IMPORTANT_NOM
-python3 dataplot_NN_LQR.py
-```
+    cd PAPER_IMPORTANT_NOM
+    python3 dataplot_NN_LQR.py
 
 and:
 
-```bash
-python3 NOM_IP_YALMIP_NOM_LQR.py
-```
+    python3 NOM_IP_YALMIP_NOM_LQR.py
 
----
+## One more thing
+If you find this helpful, please cite our paper:
 
-## One More Thing
-
-If you find this project helpful, please cite our paper.
-
-If you encounter any bugs, feel free to open an issue on GitHub.
-```
-
-### Key Improvements:
-1. Added proper headers (`#`, `##`, `###`) for better sectioning.
-2. Used GitHub-supported code blocks (` ``` `) for file names and code snippets.
-3. Removed typos and improved readability (e.g., "sorce" → "source", "follwoing" → "following").
-4. Enhanced mathematical expressions for better rendering with GitHub's LaTeX support (`$...$` for inline and `$$...$$` for blocks).
+If you find any bugs, please feel free to publish issues in github.
