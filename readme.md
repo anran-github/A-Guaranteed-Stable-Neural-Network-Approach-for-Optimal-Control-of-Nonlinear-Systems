@@ -22,6 +22,7 @@ $$
 
 
 which can be discretize using Euler's method as follows ($\Delta T$=0.1s):
+
 $$
 \begin{align}
 x_1(t+1)&=x_1(t)+\Delta T x_2(t),\\
@@ -38,6 +39,7 @@ You can compare your controller with our NOM-NN controller via revising followin
 
 ### 2. Drone (Real+Simulation)
 The Bibop 2 drone dynamic model we are using is following:
+
 $$
 \begin{aligned}
 & \dot{x}=\left[\begin{array}{cccccc}
